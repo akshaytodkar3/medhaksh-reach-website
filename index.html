@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Medhaksh Reach — Stay close to every customer.</title>
+<meta name="description" content="Medhaksh Reach lets shop owners send WhatsApp campaigns to their own customers — offers, updates, and reminders, delivered where people actually read them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#FAF9F6; --surface:#FFFFFF; --ink:#141C17; --muted:#5C6862;
+    --line:rgba(20,28,23,0.12); --accent:#128C5E; --accent2:#0E7490;
+    --accent-ink:#FFFFFF; --tint:color-mix(in oklab, var(--accent) 9%, var(--bg));
+    --shadow:0 1px 2px rgba(20,28,23,0.05), 0 12px 32px rgba(20,28,23,0.07);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#0C1210; --surface:#151D19; --ink:#EFF3F0; --muted:#93A199;
+      --line:rgba(239,243,240,0.12); --accent-ink:#0B120E;
+      --accent:color-mix(in oklab, #128C5E 72%, white);
+      --accent2:color-mix(in oklab, #0E7490 72%, white);
+      --tint:color-mix(in oklab, var(--accent) 16%, var(--bg));
+      --shadow:0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg:#FAF9F6; --surface:#FFFFFF; --ink:#141C17; --muted:#5C6862;
+    --line:rgba(20,28,23,0.12); --accent:#128C5E; --accent2:#0E7490;
+    --accent-ink:#FFFFFF; --tint:color-mix(in oklab, var(--accent) 9%, var(--bg));
+    --shadow:0 1px 2px rgba(20,28,23,0.05), 0 12px 32px rgba(20,28,23,0.07);
+  }
+  :root[data-theme="dark"] {
+    --bg:#0C1210; --surface:#151D19; --ink:#EFF3F0; --muted:#93A199;
+    --line:rgba(239,243,240,0.12); --accent-ink:#0B120E;
+    --accent:color-mix(in oklab, #128C5E 72%, white);
+    --accent2:color-mix(in oklab, #0E7490 72%, white);
+    --tint:color-mix(in oklab, var(--accent) 16%, var(--bg));
+    --shadow:0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+  }
+
+  html, body { margin:0; padding:0; }
+  * { box-sizing:border-box; }
+  a { text-decoration:none; }
+  body {
+    background:var(--bg); color:var(--ink); font-family:'Instrument Sans', Helvetica, sans-serif;
+    min-height:100vh; transition:background .35s, color .35s; line-height:1.55;
+    overflow-x:hidden; position:relative;
+  }
+  .heading { font-family:'Bricolage Grotesque', sans-serif; }
+
+  @keyframes mr-rise { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes mr-drift1 { 0% { transform:translate(0,0) scale(1); } 50% { transform:translate(60px,-40px) scale(1.15); } 100% { transform:translate(0,0) scale(1); } }
+  @keyframes mr-drift2 { 0% { transform:translate(0,0) scale(1); } 50% { transform:translate(-70px,50px) scale(1.1); } 100% { transform:translate(0,0) scale(1); } }
+  @keyframes mr-float { 0% { transform:translateY(0) rotate(var(--r,0deg)); } 50% { transform:translateY(-14px) rotate(var(--r,0deg)); } 100% { transform:translateY(0) rotate(var(--r,0deg)); } }
+  @keyframes mr-pop { 0% { opacity:0; transform:translateY(16px) scale(0.92); } 100% { opacity:1; transform:translateY(0) scale(1); } }
+  @keyframes mr-marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  @keyframes mr-pulse { 0%,100% { box-shadow:0 0 0 0 color-mix(in oklab, var(--accent) 45%, transparent); } 70% { box-shadow:0 0 0 14px transparent; } 100% { box-shadow:0 0 0 0 transparent; } }
+  @keyframes mr-shine { from { background-position:200% center; } to { background-position:-200% center; } }
+  @media (prefers-reduced-motion: reduce) { * { animation-duration:0.01s !important; } }
+
+  /* interactive elements (converted from style-hover) */
+  .nav-link { color:var(--muted); font-size:14.5px; font-weight:500; padding:8px 10px; border-radius:8px; transition:color .2s, background .2s; }
+  .nav-link:hover { color:var(--ink); background:var(--tint); }
+
+  .theme-toggle-btn {
+    width:36px; height:36px; border-radius:50%; border:1px solid var(--line); background:var(--surface);
+    color:var(--ink); cursor:pointer; font-size:15px; display:grid; place-items:center; padding:0; transition:transform .3s, border-color .3s;
+  }
+  .theme-toggle-btn:hover { border-color:var(--accent); transform:rotate(40deg); }
+
+  .btn-cta {
+    background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff; font-weight:700;
+    border-radius:999px; box-shadow:0 10px 30px color-mix(in oklab, var(--accent) 40%, transparent);
+    transition:transform .2s, box-shadow .2s; display:inline-block;
+  }
+  .btn-cta:hover { transform:translateY(-3px); box-shadow:0 16px 40px color-mix(in oklab, var(--accent) 55%, transparent); }
+
+  .btn-secondary {
+    border:1.5px solid var(--line); background:color-mix(in oklab, var(--surface) 70%, transparent);
+    backdrop-filter:blur(6px); color:var(--ink); font-weight:600; font-size:16px; padding:14px 28px;
+    border-radius:999px; transition:border-color .2s, color .2s; display:inline-block;
+  }
+  .btn-secondary:hover { border-color:var(--accent); color:var(--accent); }
+
+  .preview-card { transition:transform .4s; }
+  .preview-card:hover { transform:rotate(0deg) scale(1.015); }
+
+  .step-card { transition:transform .3s, box-shadow .3s, border-color .3s; }
+  .step-card:hover { transform:translateY(-6px); box-shadow:0 20px 44px color-mix(in oklab, var(--accent) 16%, transparent); border-color:color-mix(in oklab, var(--accent) 45%, var(--line)); }
+
+  .footer-link { color:var(--muted); font-weight:500; transition:color .2s; }
+  .footer-link:hover { color:var(--accent); }
+
+  .contact-chip {
+    display:inline-flex; align-items:center; gap:8px; color:#F2F6F3; opacity:0.85; font-weight:600;
+    font-size:14.5px; padding:10px 18px; border-radius:999px; border:1.5px solid rgba(242,246,243,0.25);
+    transition:opacity .2s, border-color .2s;
+  }
+  .contact-chip:hover { opacity:1; border-color:rgba(242,246,243,0.5); }
+
+  [data-reveal] { opacity:0; transform:translateY(28px); }
+  [data-reveal].is-visible { opacity:1; transform:translateY(0); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+</style>
+</head>
+<body>
+
+<div id="root" style="min-height:100vh;">
+
+  <!-- ============ NAV ============ -->
+  <header style="position:sticky; top:0; z-index:40; backdrop-filter:blur(14px); background:color-mix(in oklab, var(--bg) 78%, transparent); border-bottom:1px solid var(--line);">
+    <nav style="max-width:1160px; margin:0 auto; padding:14px clamp(16px, 4vw, 32px); display:flex; align-items:center; gap:20px;">
+      <a href="#top" style="display:flex; align-items:center; gap:10px; color:var(--ink);">
+        <span class="heading" style="width:32px; height:32px; border-radius:10px; background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff; display:grid; place-items:center; font-weight:800; font-size:15px; box-shadow:0 4px 14px color-mix(in oklab, var(--accent) 40%, transparent);">M</span>
+        <span class="heading" style="font-weight:700; font-size:17px; letter-spacing:-0.01em;">Medhaksh Reach</span>
+      </a>
+      <div style="flex:1;"></div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <a href="#how" class="nav-link">How it works</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <button id="themeToggle" class="theme-toggle-btn" title="Toggle light / dark" aria-label="Toggle light and dark mode">☀</button>
+        <a href="https://wa.me/919325258531?text=Hi%20Medhaksh%20Reach%2C%20I%27d%20like%20to%20know%20more%20about%20your%20WhatsApp%20campaign%20platform." target="_blank" rel="noopener" class="btn-cta" style="font-size:14.5px; padding:9px 18px;">Get in touch</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section id="top" style="position:relative; overflow:hidden;">
+    <div aria-hidden="true" style="position:absolute; inset:0; pointer-events:none;">
+      <div style="position:absolute; top:-160px; left:-120px; width:520px; height:520px; border-radius:50%; background:radial-gradient(circle, color-mix(in oklab, var(--accent) 28%, transparent), transparent 65%); filter:blur(40px); animation:mr-drift1 14s ease-in-out infinite;"></div>
+      <div style="position:absolute; top:10%; right:-160px; width:560px; height:560px; border-radius:50%; background:radial-gradient(circle, color-mix(in oklab, var(--accent2) 24%, transparent), transparent 65%); filter:blur(48px); animation:mr-drift2 18s ease-in-out infinite;"></div>
+      <div style="position:absolute; inset:0; background-image:radial-gradient(color-mix(in oklab, var(--ink) 12%, transparent) 1px, transparent 1px); background-size:28px 28px; mask-image:radial-gradient(ellipse 70% 60% at 50% 0%, black 30%, transparent 75%); opacity:0.35;"></div>
+    </div>
+
+    <div style="position:relative; max-width:1160px; margin:0 auto; padding:clamp(28px, 4vw, 56px) clamp(16px, 4vw, 32px) clamp(48px, 7vw, 84px); display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:clamp(36px, 5vw, 72px); align-items:center;">
+      <div style="animation:mr-rise .7s cubic-bezier(.2,.7,.2,1) both;">
+        <div style="display:inline-flex; align-items:center; gap:8px; border:1px solid color-mix(in oklab, var(--accent) 35%, var(--line)); background:color-mix(in oklab, var(--tint) 70%, var(--surface)); border-radius:999px; padding:6px 14px 6px 8px; font-size:13px; font-weight:600; color:var(--accent); margin-bottom:26px;">
+          <span style="width:8px; height:8px; border-radius:50%; background:var(--accent); display:inline-block; animation:mr-pulse 2.2s ease-out infinite;"></span>
+          Built on Meta&rsquo;s WhatsApp Business Platform
+        </div>
+        <h1 class="heading" style="font-size:clamp(2.7rem, 6vw, 4.8rem); line-height:1.02; letter-spacing:-0.03em; font-weight:800; margin:0 0 22px;">Stay close to<br><span style="background:linear-gradient(110deg, var(--accent), var(--accent2), var(--accent)); background-size:200% auto; -webkit-background-clip:text; background-clip:text; color:transparent; animation:mr-shine 6s linear infinite;">every customer.</span></h1>
+        <p style="font-size:clamp(1.05rem, 1.6vw, 1.25rem); color:var(--muted); max-width:44ch; margin:0 0 34px; text-wrap:pretty;">Medhaksh Reach lets shop owners send WhatsApp campaigns to their own customers &mdash; offers, updates, and reminders, delivered where people actually read them.</p>
+        <div style="display:flex; gap:14px; flex-wrap:wrap; align-items:center;">
+          <a href="https://wa.me/919325258531?text=Hi%20Medhaksh%20Reach%2C%20I%27d%20like%20to%20know%20more%20about%20your%20WhatsApp%20campaign%20platform." target="_blank" rel="noopener" class="btn-cta" style="font-size:16px; padding:15px 30px;">Get started</a>
+          <a href="#how" class="btn-secondary">See how it works</a>
+        </div>
+        <div style="display:flex; gap:26px; margin-top:38px; flex-wrap:wrap;">
+          <div><div class="heading" id="statDelivered" style="font-weight:700; font-size:1.5rem; letter-spacing:-0.02em;">0%</div><div style="font-size:13px; color:var(--muted);">delivery rate</div></div>
+          <div style="width:1px; background:var(--line);"></div>
+          <div><div class="heading" id="statOpen" style="font-weight:700; font-size:1.5rem; letter-spacing:-0.02em;">0%</div><div style="font-size:13px; color:var(--muted);">messages read</div></div>
+          <div style="width:1px; background:var(--line);"></div>
+          <div><div class="heading" style="font-weight:700; font-size:1.5rem; letter-spacing:-0.02em;">Opt-in</div><div style="font-size:13px; color:var(--muted);">only, always</div></div>
+        </div>
+      </div>
+
+      <!-- Campaign preview card -->
+      <div style="animation:mr-rise .7s .15s cubic-bezier(.2,.7,.2,1) both; display:flex; justify-content:center; position:relative;">
+        <div aria-hidden="true" style="position:absolute; top:-26px; left:-18px; --r:-6deg; animation:mr-float 5s ease-in-out infinite; background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600; box-shadow:var(--shadow); color:var(--accent); z-index:2;">&#10003;&#10003; Read &middot; 2 min ago</div>
+        <div aria-hidden="true" style="position:absolute; bottom:22px; right:-6px; --r:5deg; animation:mr-float 6s .8s ease-in-out infinite; background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600; box-shadow:var(--shadow); z-index:2;">+312 replies today</div>
+
+        <div class="preview-card" style="width:min(400px, 100%); background:var(--surface); border:1px solid var(--line); border-radius:24px; box-shadow:0 24px 60px color-mix(in oklab, var(--ink) 14%, transparent); overflow:hidden; transform:rotate(1.2deg);">
+          <div style="padding:14px 18px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:12px;">
+            <span class="heading" style="width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff; display:grid; place-items:center; font-weight:700; font-size:14px;">AK</span>
+            <div>
+              <div style="font-weight:600; font-size:14.5px;">Anand Kirana Store</div>
+              <div style="font-size:12.5px; color:var(--muted);">Campaign &middot; Diwali offer</div>
+            </div>
+            <span style="margin-left:auto; font-size:11.5px; font-weight:700; color:var(--accent); background:var(--tint); border-radius:999px; padding:4px 10px; display:inline-flex; align-items:center; gap:6px;"><span style="width:6px; height:6px; border-radius:50%; background:var(--accent); animation:mr-pulse 1.8s ease-out infinite;"></span>Live</span>
+          </div>
+          <div style="padding:20px 18px; display:flex; flex-direction:column; gap:12px; background:color-mix(in oklab, var(--tint) 55%, var(--bg)); min-height:220px;">
+            <div style="align-self:flex-start; max-width:86%; background:var(--surface); border:1px solid var(--line); border-radius:4px 18px 18px 18px; padding:12px 14px; font-size:14px; box-shadow:0 2px 6px rgba(20,28,23,0.07); animation:mr-pop .5s .6s cubic-bezier(.2,.7,.2,1) both;">
+              Namaste! This Diwali, get <strong>15% off</strong> on all dry fruits &amp; gift packs at Anand Kirana. Offer valid till Sunday. Reply STOP to opt out.
+              <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:8px; font-size:11.5px; color:var(--muted); align-items:center;">
+                <span>6:42 pm</span><span style="letter-spacing:-2px; color:#34B7F1;">&#10003;&#10003;</span>
+              </div>
+            </div>
+            <div style="align-self:flex-end; max-width:76%; background:linear-gradient(135deg, color-mix(in oklab, var(--accent) 18%, var(--surface)), color-mix(in oklab, var(--accent2) 14%, var(--surface))); border-radius:18px 4px 18px 18px; padding:10px 14px; font-size:14px; animation:mr-pop .5s 1.8s cubic-bezier(.2,.7,.2,1) both;">Bhaiya, keep 1kg kaju pack aside for me!</div>
+            <div style="align-self:flex-end; max-width:76%; background:linear-gradient(135deg, color-mix(in oklab, var(--accent) 18%, var(--surface)), color-mix(in oklab, var(--accent2) 14%, var(--surface))); border-radius:18px 4px 18px 18px; padding:10px 14px; font-size:14px; animation:mr-pop .5s 2.6s cubic-bezier(.2,.7,.2,1) both;">Coming at 7 &#127881;</div>
+          </div>
+          <div style="padding:14px 18px; display:flex; gap:8px; flex-wrap:wrap; border-top:1px solid var(--line);">
+            <span id="sentCount" style="font-size:12.5px; font-weight:600; border:1px solid var(--line); border-radius:999px; padding:5px 12px; color:var(--muted);">0 sent</span>
+            <span style="font-size:12.5px; font-weight:600; border:1px solid var(--line); border-radius:999px; padding:5px 12px; color:var(--muted);">98% delivered</span>
+            <span id="replyCount" style="font-size:12.5px; font-weight:700; border-radius:999px; padding:5px 12px; color:var(--accent); background:var(--tint);">0 replies</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <div aria-hidden="true" style="border-top:1px solid var(--line); border-bottom:1px solid var(--line); overflow:hidden; background:color-mix(in oklab, var(--surface) 55%, var(--bg)); padding:16px 0;">
+    <div style="display:flex; gap:0; width:max-content; animation:mr-marquee 26s linear infinite;">
+      <div class="heading" style="display:flex; gap:44px; padding-right:44px; font-weight:600; font-size:15px; color:var(--muted); white-space:nowrap; align-items:center;">
+        <span>Festival offers</span><span style="color:var(--accent);">&#9670;</span><span>Restock alerts</span><span style="color:var(--accent);">&#9670;</span><span>Order updates</span><span style="color:var(--accent);">&#9670;</span><span>Loyalty rewards</span><span style="color:var(--accent);">&#9670;</span><span>New arrivals</span><span style="color:var(--accent);">&#9670;</span><span>Payment reminders</span><span style="color:var(--accent);">&#9670;</span>
+      </div>
+      <div class="heading" style="display:flex; gap:44px; padding-right:44px; font-weight:600; font-size:15px; color:var(--muted); white-space:nowrap; align-items:center;">
+        <span>Festival offers</span><span style="color:var(--accent);">&#9670;</span><span>Restock alerts</span><span style="color:var(--accent);">&#9670;</span><span>Order updates</span><span style="color:var(--accent);">&#9670;</span><span>Loyalty rewards</span><span style="color:var(--accent);">&#9670;</span><span>New arrivals</span><span style="color:var(--accent);">&#9670;</span><span>Payment reminders</span><span style="color:var(--accent);">&#9670;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section id="how" style="position:relative;">
+    <div style="max-width:1160px; margin:0 auto; padding:clamp(64px, 9vw, 110px) clamp(16px, 4vw, 32px);">
+      <div data-reveal style="max-width:600px; margin-bottom:clamp(36px, 5vw, 60px);">
+        <div style="font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:14px;">How it works</div>
+        <h2 class="heading" style="font-size:clamp(1.9rem, 3.6vw, 2.8rem); line-height:1.1; letter-spacing:-0.025em; font-weight:700; margin:0;">From your customer list to their chat, in four steps.</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:18px;">
+        <div data-reveal class="step-card" style="background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:28px 24px; position:relative; overflow:hidden;">
+          <div class="heading" style="position:absolute; top:-30px; right:-10px; font-weight:800; font-size:110px; line-height:1; color:var(--tint); user-select:none;">1</div>
+          <div class="heading" style="font-weight:800; color:#fff; font-size:14px; background:linear-gradient(135deg, var(--accent), var(--accent2)); width:38px; height:38px; border-radius:12px; display:grid; place-items:center; margin-bottom:18px; box-shadow:0 6px 16px color-mix(in oklab, var(--accent) 35%, transparent);">01</div>
+          <h3 style="font-size:17px; font-weight:700; margin:0 0 6px; position:relative;">Upload your contacts</h3>
+          <p style="font-size:14.5px; color:var(--muted); margin:0; text-wrap:pretty; position:relative;">Bring in your customer list from a spreadsheet or phone book. Your data stays yours.</p>
+        </div>
+        <div data-reveal class="step-card" style="background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:28px 24px; position:relative; overflow:hidden;">
+          <div class="heading" style="position:absolute; top:-30px; right:-10px; font-weight:800; font-size:110px; line-height:1; color:var(--tint); user-select:none;">2</div>
+          <div class="heading" style="font-weight:800; color:#fff; font-size:14px; background:linear-gradient(135deg, var(--accent), var(--accent2)); width:38px; height:38px; border-radius:12px; display:grid; place-items:center; margin-bottom:18px; box-shadow:0 6px 16px color-mix(in oklab, var(--accent) 35%, transparent);">02</div>
+          <h3 style="font-size:17px; font-weight:700; margin:0 0 6px; position:relative;">Create message templates</h3>
+          <p style="font-size:14.5px; color:var(--muted); margin:0; text-wrap:pretty; position:relative;">Write offers and updates as WhatsApp templates, approved through Meta&rsquo;s official review.</p>
+        </div>
+        <div data-reveal class="step-card" style="background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:28px 24px; position:relative; overflow:hidden;">
+          <div class="heading" style="position:absolute; top:-30px; right:-10px; font-weight:800; font-size:110px; line-height:1; color:var(--tint); user-select:none;">3</div>
+          <div class="heading" style="font-weight:800; color:#fff; font-size:14px; background:linear-gradient(135deg, var(--accent), var(--accent2)); width:38px; height:38px; border-radius:12px; display:grid; place-items:center; margin-bottom:18px; box-shadow:0 6px 16px color-mix(in oklab, var(--accent) 35%, transparent);">03</div>
+          <h3 style="font-size:17px; font-weight:700; margin:0 0 6px; position:relative;">Send campaigns</h3>
+          <p style="font-size:14.5px; color:var(--muted); margin:0; text-wrap:pretty; position:relative;">Reach all your opted-in customers at once &mdash; festivals, restocks, reminders, new arrivals.</p>
+        </div>
+        <div data-reveal class="step-card" style="background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:28px 24px; position:relative; overflow:hidden;">
+          <div class="heading" style="position:absolute; top:-30px; right:-10px; font-weight:800; font-size:110px; line-height:1; color:var(--tint); user-select:none;">4</div>
+          <div class="heading" style="font-weight:800; color:#fff; font-size:14px; background:linear-gradient(135deg, var(--accent), var(--accent2)); width:38px; height:38px; border-radius:12px; display:grid; place-items:center; margin-bottom:18px; box-shadow:0 6px 16px color-mix(in oklab, var(--accent) 35%, transparent);">04</div>
+          <h3 style="font-size:17px; font-weight:700; margin:0 0 6px; position:relative;">Track delivery</h3>
+          <p style="font-size:14.5px; color:var(--muted); margin:0; text-wrap:pretty; position:relative;">See what was sent, delivered, and read &mdash; so you know every campaign landed.</p>
+        </div>
+      </div>
+      <p data-reveal style="margin:clamp(28px, 4vw, 44px) 0 0; font-size:14px; color:var(--muted); display:flex; align-items:center; gap:8px;">
+        <span style="width:8px; height:8px; border-radius:50%; background:var(--accent); display:inline-block; flex:none; animation:mr-pulse 2.4s ease-out infinite;"></span>
+        Opt-in only. Every message goes through Meta&rsquo;s official WhatsApp Business Platform &mdash; no unofficial APIs, no spam.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" style="max-width:1160px; margin:0 auto; padding:0 clamp(16px, 4vw, 32px) clamp(64px, 9vw, 110px);">
+    <div data-reveal style="position:relative; overflow:hidden; background:linear-gradient(135deg, #10231A, #0D1F26); color:#F2F6F3; border-radius:28px; padding:clamp(44px, 7vw, 80px) clamp(24px, 5vw, 64px); text-align:center;">
+      <div aria-hidden="true" style="position:absolute; top:-120px; left:50%; transform:translateX(-50%); width:600px; height:340px; border-radius:50%; background:radial-gradient(ellipse, color-mix(in oklab, var(--accent) 45%, transparent), transparent 70%); filter:blur(30px); animation:mr-drift1 12s ease-in-out infinite;"></div>
+      <h2 class="heading" style="position:relative; font-size:clamp(1.9rem, 3.8vw, 3rem); letter-spacing:-0.025em; font-weight:800; margin:0 0 14px;">Ready to reach your customers?</h2>
+      <p style="position:relative; font-size:17px; opacity:0.75; margin:0 0 32px; text-wrap:pretty;">Write to us and we&rsquo;ll help you set up your first campaign.</p>
+      <a href="mailto:medhakshreach@gmail.com" class="btn-cta" style="position:relative; font-size:17px; padding:16px 34px;">medhakshreach@gmail.com</a>
+      <div style="position:relative; display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:16px;">
+        <a href="tel:+919325258531" class="contact-chip">
+          &#128222; +91 93252 58531
+        </a>
+        <a href="https://wa.me/919325258531?text=Hi%20Medhaksh%20Reach%2C%20I%27d%20like%20to%20know%20more%20about%20your%20WhatsApp%20campaign%20platform." target="_blank" rel="noopener" class="contact-chip">
+          &#128172; Chat on WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="border-top:1px solid var(--line);">
+    <div style="max-width:1160px; margin:0 auto; padding:28px clamp(16px, 4vw, 32px); display:flex; align-items:center; gap:16px; flex-wrap:wrap; font-size:13.5px; color:var(--muted);">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span class="heading" style="width:22px; height:22px; border-radius:7px; background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff; display:grid; place-items:center; font-weight:800; font-size:11px;">M</span>
+        &copy; 2026 Medhaksh Reach
+      </span>
+      <div style="flex:1;"></div>
+      <a href="privacy.html" class="footer-link">Privacy Policy</a>
+      <a href="mailto:medhakshreach@gmail.com" class="footer-link">medhakshreach@gmail.com</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var toggleBtn = document.getElementById('themeToggle');
+
+    function systemTheme() {
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function currentTheme() {
+      return localStorage.getItem('mr-theme') || systemTheme();
+    }
+    function applyTheme(theme) {
+      root.setAttribute('data-theme', theme);
+      toggleBtn.textContent = theme === 'dark' ? '☾' : '☀';
+    }
+
+    applyTheme(currentTheme());
+
+    toggleBtn.addEventListener('click', function () {
+      var next = currentTheme() === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('mr-theme', next);
+      applyTheme(next);
+    });
+
+    // Animated counters (run once on load)
+    var start = null;
+    var dur = 1800;
+    function ease(x) { return 1 - Math.pow(1 - x, 3); }
+    var sentEl = document.getElementById('sentCount');
+    var replyEl = document.getElementById('replyCount');
+    var deliveredEl = document.getElementById('statDelivered');
+    var openEl = document.getElementById('statOpen');
+
+    function tick(now) {
+      if (start === null) start = now;
+      var p = Math.min(1, (now - start) / dur);
+      var e = ease(p);
+      var sent = Math.round(1240 * e);
+      var replies = Math.round(312 * e);
+      var delivered = Math.round(98 * e);
+      var open = Math.round(91 * e);
+      sentEl.textContent = sent.toLocaleString('en-IN') + ' sent';
+      replyEl.textContent = replies + ' replies';
+      deliveredEl.textContent = delivered + '%';
+      openEl.textContent = open + '%';
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    // Scroll reveals
+    var els = document.querySelectorAll('[data-reveal]');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          var el = en.target;
+          var idx = Array.prototype.indexOf.call(els, el);
+          el.style.transitionDelay = (idx % 4) * 0.08 + 's';
+          el.classList.add('is-visible');
+          io.unobserve(el);
+        }
+      });
+    }, { threshold: 0.15 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+</body>
+</html>

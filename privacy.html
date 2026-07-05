@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Medhaksh Reach</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#FAF9F6; --surface:#FFFFFF; --ink:#141C17; --muted:#5C6862;
+    --line:rgba(20,28,23,0.12); --accent:#128C5E; --accent2:#0E7490;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0C1210; --surface:#151D19; --ink:#EFF3F0; --muted:#93A199; --line:rgba(239,243,240,0.12);
+      --accent:color-mix(in oklab, #128C5E 72%, white); --accent2:color-mix(in oklab, #0E7490 72%, white); }
+  }
+  :root[data-theme="light"] { --bg:#FAF9F6; --surface:#FFFFFF; --ink:#141C17; --muted:#5C6862; --line:rgba(20,28,23,0.12); --accent:#128C5E; --accent2:#0E7490; }
+  :root[data-theme="dark"] { --bg:#0C1210; --surface:#151D19; --ink:#EFF3F0; --muted:#93A199; --line:rgba(239,243,240,0.12);
+    --accent:color-mix(in oklab, #128C5E 72%, white); --accent2:color-mix(in oklab, #0E7490 72%, white); }
+
+  html, body { margin:0; padding:0; }
+  * { box-sizing:border-box; }
+  body { background:var(--bg); color:var(--ink); font-family:'Instrument Sans', Helvetica, sans-serif; line-height:1.65; }
+  a { color:var(--accent); }
+  .heading { font-family:'Bricolage Grotesque', sans-serif; }
+  header { border-bottom:1px solid var(--line); }
+  nav { max-width:720px; margin:0 auto; padding:18px 24px; display:flex; align-items:center; gap:10px; }
+  main { max-width:720px; margin:0 auto; padding:48px 24px 80px; }
+  h1 { font-size:2rem; letter-spacing:-0.02em; margin:0 0 8px; }
+  .updated { color:var(--muted); font-size:14px; margin:0 0 40px; }
+  h2 { font-size:1.05rem; margin:36px 0 10px; }
+  p { color:var(--muted); margin:0 0 4px; }
+  .back { display:inline-block; margin-top:40px; font-weight:600; }
+</style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" style="display:flex; align-items:center; gap:10px; color:var(--ink); text-decoration:none;">
+        <span class="heading" style="width:28px; height:28px; border-radius:8px; background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff; display:grid; place-items:center; font-weight:800; font-size:13px;">M</span>
+        <span class="heading" style="font-weight:700; font-size:15px;">Medhaksh Reach</span>
+      </a>
+    </nav>
+  </header>
+  <main>
+    <h1 class="heading">Privacy Policy</h1>
+    <p class="updated">Last updated: July 2026</p>
+
+    <p>Medhaksh Reach ("we", "us") provides a platform that lets shop owners ("merchants") send WhatsApp messages to their own customers ("contacts") using Meta's WhatsApp Business Platform.</p>
+
+    <h2 class="heading">What we collect</h2>
+    <p>Shop owner account details (name, email, business information) and contact lists that shop owners upload for their own customers, including names and phone numbers.</p>
+
+    <h2 class="heading">How we use it</h2>
+    <p>Solely to operate the messaging platform: authenticating shop owners, sending WhatsApp campaigns on their behalf, and reporting delivery status back to the shop owner.</p>
+
+    <h2 class="heading">Consent and opt-out</h2>
+    <p>Shop owners are responsible for ensuring their contacts have opted in to receive messages. Any contact can opt out at any time by replying STOP to a message, or by the shop owner removing them from their contact list.</p>
+
+    <h2 class="heading">Data sharing</h2>
+    <p>We share message content with Meta's WhatsApp Business Platform as required to deliver messages. We do not sell contact data to third parties.</p>
+
+    <h2 class="heading">Data retention</h2>
+    <p>Contact and message data is retained as long as the shop owner's account is active, or as required by applicable law. Shop owners can request deletion of their data at any time.</p>
+
+    <h2 class="heading">Contact</h2>
+    <p>Questions about this policy: <a href="mailto:medhakshreach@gmail.com">medhakshreach@gmail.com</a></p>
+
+    <a class="back" href="index.html">&larr; Back to home</a>
+  </main>
+  <script>
+    (function () {
+      var stored = localStorage.getItem('mr-theme');
+      if (stored) document.documentElement.setAttribute('data-theme', stored);
+    })();
+  </script>
+</body>
+</html>
