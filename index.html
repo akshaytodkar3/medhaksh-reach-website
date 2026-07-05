@@ -10,20 +10,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:#FAF9F6; --surface:#FFFFFF; --ink:#141C17; --muted:#5C6862;
-    --line:rgba(20,28,23,0.12); --accent:#128C5E; --accent2:#0E7490;
-    --accent-ink:#FFFFFF; --tint:color-mix(in oklab, var(--accent) 9%, var(--bg));
-    --shadow:0 1px 2px rgba(20,28,23,0.05), 0 12px 32px rgba(20,28,23,0.07);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg:#0C1210; --surface:#151D19; --ink:#EFF3F0; --muted:#93A199;
-      --line:rgba(239,243,240,0.12); --accent-ink:#0B120E;
-      --accent:color-mix(in oklab, #128C5E 72%, white);
-      --accent2:color-mix(in oklab, #0E7490 72%, white);
-      --tint:color-mix(in oklab, var(--accent) 16%, var(--bg));
-      --shadow:0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
-    }
+    --bg:#0C1210; --surface:#151D19; --ink:#EFF3F0; --muted:#93A199;
+    --line:rgba(239,243,240,0.12); --accent-ink:#0B120E;
+    --accent:color-mix(in oklab, #128C5E 72%, white);
+    --accent2:color-mix(in oklab, #0E7490 72%, white);
+    --tint:color-mix(in oklab, var(--accent) 16%, var(--bg));
+    --shadow:0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
   }
   :root[data-theme="light"] {
     --bg:#FAF9F6; --surface:#FFFFFF; --ink:#141C17; --muted:#5C6862;
@@ -93,9 +85,42 @@
   .footer-link { color:var(--muted); font-weight:500; transition:color .2s; }
   .footer-link:hover { color:var(--accent); }
 
+  .business-tag {
+    display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:600; color:var(--ink);
+    background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:9px 16px;
+    font-family:inherit; cursor:pointer; transition:border-color .2s, transform .2s, background .2s;
+  }
+  .business-tag:hover { border-color:color-mix(in oklab, var(--accent) 45%, var(--line)); transform:translateY(-2px); }
+  .business-tag.is-active { background:var(--tint); border-color:var(--accent); color:var(--accent); }
+  @keyframes mr-tag-pop { 0% { transform:scale(1); } 40% { transform:scale(0.9); } 100% { transform:scale(1); } }
+  .business-tag.is-popping { animation:mr-tag-pop .35s ease; }
+
+  .business-panel {
+    max-width:560px; margin:0 auto 0; opacity:0; max-height:0; overflow:hidden; transform:scale(0.94);
+    transition:opacity .35s ease, transform .4s cubic-bezier(.34,1.56,.64,1), max-height .4s ease;
+  }
+  .business-panel.is-open { opacity:1; max-height:460px; margin-top:24px; transform:scale(1); }
+  .business-panel-inner { background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:24px; text-align:left; box-shadow:var(--shadow); }
+  .business-bubble { background:var(--tint); border-radius:4px 16px 16px 16px; padding:14px 16px; font-size:14.5px; margin:10px 0 14px; text-wrap:pretty; }
+  .business-benefit { font-weight:700; color:var(--accent); font-size:14.5px; margin-bottom:18px; }
+
+  .business-typing {
+    display:flex; gap:4px; align-items:center; padding:16px; background:var(--tint); border-radius:4px 16px 16px 16px;
+    width:fit-content; margin:10px 0 14px;
+  }
+  .business-typing span { width:7px; height:7px; border-radius:50%; background:var(--muted); animation:mr-typing-bounce 1.1s infinite ease-in-out; }
+  .business-typing span:nth-child(2) { animation-delay:.15s; }
+  .business-typing span:nth-child(3) { animation-delay:.3s; }
+  @keyframes mr-typing-bounce { 0%, 60%, 100% { transform:translateY(0); opacity:.5; } 30% { transform:translateY(-5px); opacity:1; } }
+
+  .business-bubble-meta { display:flex; justify-content:flex-end; gap:5px; margin-top:8px; font-size:11px; color:var(--muted); align-items:center; }
+  .business-bubble-meta .ticks { color:#34B7F1; letter-spacing:-2px; opacity:0; transition:opacity .3s ease; }
+  .business-bubble-meta .ticks.is-visible { opacity:1; }
+
   .contact-card {
     display:flex; align-items:center; gap:14px; background:rgba(242,246,243,0.06); border:1px solid rgba(242,246,243,0.14);
-    border-radius:16px; padding:14px 16px; color:#F2F6F3; transition:transform .25s, background .25s, border-color .25s;
+    border-radius:16px; padding:14px 16px; color:#F2F6F3; text-align:left;
+    transition:transform .25s, background .25s, border-color .25s;
   }
   .contact-card:hover { transform:translateY(-3px); background:rgba(242,246,243,0.1); border-color:rgba(242,246,243,0.3); }
   .contact-card-icon {
@@ -301,6 +326,42 @@
     </div>
   </div>
 
+  <!-- ============ BUSINESS TYPES ============ -->
+  <section style="max-width:1160px; margin:0 auto; padding:clamp(48px, 7vw, 84px) clamp(16px, 4vw, 32px) 0;">
+    <div data-reveal style="text-align:center; max-width:560px; margin:0 auto 28px;">
+      <div style="font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:14px;">Built for every kind of shop</div>
+      <h2 class="heading" style="font-size:clamp(1.5rem, 2.8vw, 2rem); line-height:1.2; letter-spacing:-0.02em; font-weight:700; margin:0;">Not just kirana stores.</h2>
+    </div>
+    <div data-reveal style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center;">
+      <button type="button" class="business-tag" data-key="grocery">&#127978; Grocery &amp; Kirana</button>
+      <button type="button" class="business-tag" data-key="restaurant">&#127860; Restaurants &amp; Caf&eacute;s</button>
+      <button type="button" class="business-tag" data-key="salon">&#128131; Salons &amp; Spas</button>
+      <button type="button" class="business-tag" data-key="pharmacy">&#128138; Pharmacies</button>
+      <button type="button" class="business-tag" data-key="boutique">&#128092; Clothing &amp; Boutiques</button>
+      <button type="button" class="business-tag" data-key="electronics">&#128241; Electronics &amp; Mobile</button>
+      <button type="button" class="business-tag" data-key="bakery">&#129472; Bakeries &amp; Sweets</button>
+      <button type="button" class="business-tag" data-key="gym">&#128170; Gyms &amp; Fitness</button>
+    </div>
+
+    <div id="businessPanel" class="business-panel">
+      <div class="business-panel-inner">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:2px;">
+          <span id="bpIcon" style="font-size:22px; line-height:1;"></span>
+          <div class="demo-eyebrow" id="bpLabel" style="margin-bottom:0;">Grocery &amp; Kirana example</div>
+        </div>
+
+        <div class="business-typing" id="bpTyping"><span></span><span></span><span></span></div>
+        <div class="business-bubble" id="bpMessage" style="display:none;">
+          <span id="bpMessageText"></span>
+          <div class="business-bubble-meta"><span>6:42 pm</span><span class="ticks" id="bpTicks">&#10003;&#10003;</span></div>
+        </div>
+
+        <div class="business-benefit" id="bpBenefit" style="opacity:0; transition:opacity .4s ease;"></div>
+        <a href="#" id="bpCta" target="_blank" rel="noopener" class="btn-cta" style="font-size:14.5px; padding:11px 22px; opacity:0; transition:opacity .4s ease;">Get started &rarr;</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ HOW IT WORKS ============ -->
   <section id="how" style="position:relative;">
     <div style="max-width:1160px; margin:0 auto; padding:clamp(64px, 9vw, 110px) clamp(16px, 4vw, 32px);">
@@ -448,16 +509,16 @@
 
         <div style="display:flex; flex-direction:column; gap:12px;">
           <a href="mailto:medhakshreach@gmail.com" class="contact-card">
-            <span class="contact-card-icon">&#9993;</span>
+            <span class="contact-card-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+            </span>
             <div><div class="contact-card-label">Email</div><div class="contact-card-value">medhakshreach@gmail.com</div></div>
           </a>
           <a href="tel:+919325258531" class="contact-card">
-            <span class="contact-card-icon">&#128222;</span>
+            <span class="contact-card-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </span>
             <div><div class="contact-card-label">Call</div><div class="contact-card-value">+91 93252 58531</div></div>
-          </a>
-          <a href="https://wa.me/919325258531?text=Hi%20Medhaksh%20Reach%2C%20I%27d%20like%20to%20know%20more%20about%20your%20WhatsApp%20campaign%20platform." target="_blank" rel="noopener" class="contact-card">
-            <span class="contact-card-icon">&#128172;</span>
-            <div><div class="contact-card-label">WhatsApp</div><div class="contact-card-value">Chat with us directly</div></div>
           </a>
         </div>
       </div>
@@ -484,11 +545,8 @@
     var root = document.documentElement;
     var toggleBtn = document.getElementById('themeToggle');
 
-    function systemTheme() {
-      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
     function currentTheme() {
-      return localStorage.getItem('mr-theme') || systemTheme();
+      return localStorage.getItem('mr-theme') || 'dark';
     }
     function applyTheme(theme) {
       root.setAttribute('data-theme', theme);
@@ -619,6 +677,100 @@
         var y = window.scrollY * 0.25;
         parallax.style.transform = 'translateY(' + y + 'px)';
       }, { passive: true });
+    })();
+
+    // Business-type tags: click reveals a tailored example + personalized WhatsApp CTA,
+    // staged like a real WhatsApp exchange (typing dots -> typed-out message -> ticks -> CTA).
+    (function () {
+      var tags = document.querySelectorAll('.business-tag');
+      var panel = document.getElementById('businessPanel');
+      if (!tags.length || !panel) return;
+
+      var iconEl = document.getElementById('bpIcon');
+      var labelEl = document.getElementById('bpLabel');
+      var typingEl = document.getElementById('bpTyping');
+      var bubbleEl = document.getElementById('bpMessage');
+      var textEl = document.getElementById('bpMessageText');
+      var ticksEl = document.getElementById('bpTicks');
+      var benefitEl = document.getElementById('bpBenefit');
+      var ctaEl = document.getElementById('bpCta');
+
+      var info = {
+        grocery: { icon: '🏪', label: 'Grocery & Kirana', message: 'Get 15% off dry fruits this Diwali at Anand Kirana! Reply STOP to opt out.', benefit: 'Turn festival stock into festival sales.' },
+        restaurant: { icon: '🍽️', label: 'Restaurants & Cafés', message: 'Your favourite butter chicken is back on the menu! Order today, 20% off till Sunday.', benefit: 'Fill tables on slow nights with one message.' },
+        salon: { icon: '💇', label: 'Salons & Spas', message: 'Hi Priya! Time for your monthly touch-up. Book this week for a free head massage.', benefit: 'Keep chairs full with automatic rebooking reminders.' },
+        pharmacy: { icon: '💊', label: 'Pharmacies', message: 'Reminder: your monthly BP medicine is running low. Reply YES to reorder — delivered by evening.', benefit: 'Never lose a repeat customer to a forgotten refill.' },
+        boutique: { icon: '👗', label: 'Clothing & Boutiques', message: 'New winter collection just dropped! Be the first to shop before it sells out.', benefit: 'Turn new arrivals into same-day sales.' },
+        electronics: { icon: '📱', label: 'Electronics & Mobile', message: 'Your phone’s warranty ends this month. Extend it today for free screen protection.', benefit: 'Upsell service plans without a single phone call.' },
+        bakery: { icon: '🧁', label: 'Bakeries & Sweets', message: 'Fresh gulab jamun & kaju katli ready for Diwali orders! Pre-book now, limited stock.', benefit: 'Sell out festival batches before they’re even baked.' },
+        gym: { icon: '💪', label: 'Gyms & Fitness', message: 'Your membership renews in 3 days. Renew now and lock in last year’s price.', benefit: 'Cut membership drop-off with a friendly nudge.' }
+      };
+
+      var typeTimer = null;
+      var stageTimers = [];
+
+      function clearPending() {
+        if (typeTimer) clearInterval(typeTimer);
+        stageTimers.forEach(function (t) { clearTimeout(t); });
+        stageTimers = [];
+      }
+
+      function typeText(el, text, speed, done) {
+        el.textContent = '';
+        var i = 0;
+        typeTimer = setInterval(function () {
+          el.textContent += text.charAt(i);
+          i++;
+          if (i >= text.length) {
+            clearInterval(typeTimer);
+            if (done) done();
+          }
+        }, speed);
+      }
+
+      tags.forEach(function (tag) {
+        tag.addEventListener('click', function () {
+          var data = info[tag.getAttribute('data-key')];
+          if (!data) return;
+
+          clearPending();
+
+          tag.classList.remove('is-popping');
+          void tag.offsetWidth; // restart animation if clicked repeatedly
+          tag.classList.add('is-popping');
+
+          tags.forEach(function (t) { t.classList.remove('is-active'); });
+          tag.classList.add('is-active');
+
+          iconEl.textContent = data.icon;
+          labelEl.textContent = data.label + ' example';
+
+          // Reset to "typing…" state
+          bubbleEl.style.display = 'none';
+          ticksEl.classList.remove('is-visible');
+          benefitEl.style.opacity = '0';
+          ctaEl.style.opacity = '0';
+          typingEl.style.display = 'flex';
+
+          var waMessage = 'Hi Medhaksh Reach, I run a ' + data.label.toLowerCase() + ' business and want to know more about your WhatsApp campaign platform.';
+          ctaEl.href = 'https://wa.me/919325258531?text=' + encodeURIComponent(waMessage);
+
+          panel.classList.add('is-open');
+
+          stageTimers.push(setTimeout(function () {
+            typingEl.style.display = 'none';
+            bubbleEl.style.display = 'block';
+            typeText(textEl, data.message, 18, function () {
+              ticksEl.classList.add('is-visible');
+              stageTimers.push(setTimeout(function () {
+                benefitEl.textContent = data.benefit;
+                benefitEl.style.opacity = '1';
+                ctaEl.style.opacity = '1';
+              }, 250));
+            });
+          }, 700));
+        });
+      });
     })();
 
     // Animated demo phone: cycles through 4 scenes automatically
