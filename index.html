@@ -728,49 +728,58 @@
         }, speed);
       }
 
-      tags.forEach(function (tag) {
-        tag.addEventListener('click', function () {
-          var data = info[tag.getAttribute('data-key')];
-          if (!data) return;
+      function selectTag(tag, isAuto) {
+        var data = info[tag.getAttribute('data-key')];
+        if (!data) return;
 
-          clearPending();
+        clearPending();
 
+        if (!isAuto) {
           tag.classList.remove('is-popping');
           void tag.offsetWidth; // restart animation if clicked repeatedly
           tag.classList.add('is-popping');
+        }
 
-          tags.forEach(function (t) { t.classList.remove('is-active'); });
-          tag.classList.add('is-active');
+        tags.forEach(function (t) { t.classList.remove('is-active'); });
+        tag.classList.add('is-active');
 
-          iconEl.textContent = data.icon;
-          labelEl.textContent = data.label + ' example';
+        iconEl.textContent = data.icon;
+        labelEl.textContent = data.label + ' example';
 
-          // Reset to "typing…" state
-          bubbleEl.style.display = 'none';
-          ticksEl.classList.remove('is-visible');
-          benefitEl.style.opacity = '0';
-          ctaEl.style.opacity = '0';
-          typingEl.style.display = 'flex';
+        // Reset to "typing…" state
+        bubbleEl.style.display = 'none';
+        ticksEl.classList.remove('is-visible');
+        benefitEl.style.opacity = '0';
+        ctaEl.style.opacity = '0';
+        typingEl.style.display = 'flex';
 
-          var waMessage = 'Hi Medhaksh Reach, I run a ' + data.label.toLowerCase() + ' business and want to know more about your WhatsApp campaign platform.';
-          ctaEl.href = 'https://wa.me/919325258531?text=' + encodeURIComponent(waMessage);
+        var waMessage = 'Hi Medhaksh Reach, I run a ' + data.label.toLowerCase() + ' business and want to know more about your WhatsApp campaign platform.';
+        ctaEl.href = 'https://wa.me/919325258531?text=' + encodeURIComponent(waMessage);
 
-          panel.classList.add('is-open');
+        panel.classList.add('is-open');
 
-          stageTimers.push(setTimeout(function () {
-            typingEl.style.display = 'none';
-            bubbleEl.style.display = 'block';
-            typeText(textEl, data.message, 18, function () {
-              ticksEl.classList.add('is-visible');
-              stageTimers.push(setTimeout(function () {
-                benefitEl.textContent = data.benefit;
-                benefitEl.style.opacity = '1';
-                ctaEl.style.opacity = '1';
-              }, 250));
-            });
-          }, 700));
-        });
+        stageTimers.push(setTimeout(function () {
+          typingEl.style.display = 'none';
+          bubbleEl.style.display = 'block';
+          typeText(textEl, data.message, 18, function () {
+            ticksEl.classList.add('is-visible');
+            stageTimers.push(setTimeout(function () {
+              benefitEl.textContent = data.benefit;
+              benefitEl.style.opacity = '1';
+              ctaEl.style.opacity = '1';
+            }, 250));
+          });
+        }, isAuto ? 350 : 700));
+      }
+
+      tags.forEach(function (tag) {
+        tag.addEventListener('click', function () { selectTag(tag, false); });
       });
+
+      // Auto-select the first tag (Grocery & Kirana) so visitors see the
+      // panel is already populated, instead of a static row with no hint
+      // that it's clickable.
+      selectTag(tags[0], true);
     })();
 
     // Animated demo phone: cycles through 4 scenes automatically
